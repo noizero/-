@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#172033"><title>チェス五目</title>
+<style>
+:root{--bg:#f3f5f9;--ink:#172033;--line:#b8c3d4;--blue:#2864dc;--red:#c33e4d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:#172033;color:white;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px}h1{font-size:1.2rem;margin:0}main{max-width:1050px;margin:auto;padding:12px;display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:14px}
+.panel{background:white;border:1px solid #dce2ec;border-radius:14px;padding:12px;box-shadow:0 3px 12px #1720330a}.boardwrap{width:100%;overflow:auto;touch-action:pan-x pan-y}.board{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));width:min(100%,720px);aspect-ratio:1;margin:auto;border:1px solid #7f8ba0;background:#e9d6a4;touch-action:manipulation}.cell{border:1px solid #b5a67e;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;padding:0;font-size:clamp(10px,2.8vw,24px);font-weight:700;line-height:1;background:transparent;color:#182033;cursor:pointer;position:relative}.cell:focus-visible{outline:3px solid #2864dc;z-index:2}.cell.selected{background:#b9d5ff!important;box-shadow:inset 0 0 0 3px var(--blue)}.cell.hint{background:#d8edce}.cell.winning{background:#ffe58b}.piece{width:85%;height:85%;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 2px #fff8,0 1px 3px #0003}.p1 .piece{background:#f9fbff;border:2px solid #4a5568;color:#172033}.p2 .piece{background:#29364e;border:2px solid #f5f7fb;color:white}.cell.p1,.cell.p2{background:#e9d6a4}.side{display:flex;flex-direction:column;gap:12px}label{display:block;font-size:.9rem;margin:8px 0 4px}select,input,button{font:inherit;border-radius:9px;border:1px solid #c5cedc;padding:9px;background:white;color:var(--ink);max-width:100%}button{cursor:pointer;font-weight:650}button.primary{background:var(--blue);border-color:var(--blue);color:white}button.danger{color:#a72b3b}button:disabled{opacity:.45;cursor:not-allowed}.row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.row>*{flex:1}.status{font-weight:750;font-size:1.05rem}.muted{color:#667085;font-size:.84rem;line-height:1.5}.counts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.countbox{padding:8px;background:#f4f6fa;border-radius:10px}.countbox strong{display:block}.pill{display:inline-block;background:#eef2f8;padding:3px 8px;border-radius:999px;font-size:.8rem}.hidden{display:none!important}#message{min-height:2.5em;line-height:1.4}.section-title{font-weight:750;margin-bottom:6px}details summary{cursor:pointer;font-weight:700}#onlineStatus{overflow-wrap:anywhere}.footer{max-width:1050px;margin:0 auto;padding:0 14px 18px;font-size:.8rem;color:#667085}
+@media(max-width:760px){main{display:flex;flex-direction:column;padding:8px;gap:8px}.panel{padding:9px}.board{width:100%;font-size:clamp(9px,4vw,18px)}.side{display:grid;grid-template-columns:1fr 1fr;align-items:start}.side .wide{grid-column:1/-1}header{padding:12px}h1{font-size:1.05rem}}
+</style></head>
+<body>
+<header><h1>♟ チェス五目</h1><span class="pill" style="background:#fff2;color:white">スマホ / PC</span></header>
+<main>
+<section class="panel">
+<div class="row" style="margin-bottom:9px"><div id="turn" class="status">設定を選んで開始してください</div><button id="newGame" class="primary">新しい対局</button></div>
+<div class="boardwrap"><div id="board" class="board" aria-label="15×15盤面"></div></div>
+<p id="message" role="status" aria-live="polite" class="muted">設定後、空いているマスをタップして駒を置きます。</p>
+<div class="row"><button id="cancelMove">移動選択を解除</button><button id="undo" class="danger">1手戻す</button></div>
+</section>
+<aside class="side">
+<section class="panel wide">
+<div class="section-title">対局設定</div>
+<label>対戦方法</label><select id="mode"><option value="local">同じ端末で交互に対戦</option><option value="online">オンライン対戦（Firebase設定が必要）</option></select>
+<label>能力</label><select id="abilities"><option value="on">チェス駒の能力あり</option><option value="off">能力なし（通常の五目並べ）</option></select>
+<label>ナイト</label><select id="knights"><option value="on">使用する</option><option value="off">使用しない（各14個）</option></select>
+<label>長距離ボーナス</label><select id="bonus"><option value="on">使用する</option><option value="off">使用しない</option></select>
+<label>分岐制限</label><select id="branch"><option value="on">あり（接続数1のみ）</option><option value="off">なし</option></select>
+<button id="start" class="primary" style="width:100%;margin-top:10px">設定で対局開始</button>
+<p class="muted">能力なしではナイトを含む通常の五目並べ（5個連続）になります。長距離ボーナスは相手の勝利に必要な経路駒数を7個から9個へ増やします。</p>
+</section>
+<section class="panel">
+<div class="section-title">駒の残数</div><div class="counts" id="counts"></div>
+</section>
+<section class="panel">
+<div class="section-title">操作</div>
+<p class="muted" id="help">駒を置く：空きマスをタップ。移動：自分の駒を選び、空きマスをタップします。</p>
+<div class="muted" id="onlineStatus">オンライン未接続</div>
+</section>
+<section class="panel wide">
+<details><summary>接続ルール</summary><div class="muted" style="margin-top:8px">
+歩：隣接する上下左右。<br>ルーク：縦横3マス以上。<br>ビショップ：斜め3マス以上。<br>クイーン：縦横斜め3マス以上。<br>キング：周囲1マス。ナイト：チェスのL字。<br>ルーク・ビショップ・クイーンの線上は途中の駒で遮られます。同種駒同士は直接接続しません。クイーンとビショップは同じ横列で3マス以上離れていて、間に駒がなければ接続します。<br>能力ありは自分の駒7個以上を重複なしの1本の経路でつなぐと勝利。相手に長距離ボーナスがある場合は9個必要。能力なしは縦横斜めに5個連続で勝利。
+</div></details>
+</section>
+</aside></main><div class="footer">試作版。オンライン対戦にはFirebase Realtime Databaseの設定が必要です。対局ルールはブラウザ上で処理されます。</div>
+<script>
+(()=>{'use strict';
+const N=15, types=['P','R','B','N','Q','K'], names={P:'歩',R:'ル',B:'ビ',N:'ナ',Q:'ク',K:'キ'}, glyph={P:'♟',R:'♜',B:'♝',N:'♞',Q:'♛',K:'♚'};
+let board,turn,started=false,abilities=true,knights=true,bonus=true,branch=true,selected=null,hand,history=[],gameOver=false,winning=[],online=null,roomRef=null,playerId=1,roomCode='';
+const $=id=>document.getElementById(id), boardEl=$('board');
+function emptyBoard(){return Array.from({length:N},()=>Array(N).fill(null))}
+function inventory(){return {P:8,R:2,B:2,N:knights?2:0,Q:1,K:1}}
+function init(){board=emptyBoard();turn=1;selected=null;gameOver=false;winning=[];history=[];hand={1:inventory(),2:inventory()};started=true;render();say('先手：空きマスをタップして駒を配置してください。');$('turn').textContent='先手の番';}
+function say(s){$('message').textContent=s}
+function snapshot(){return JSON.stringify({board,turn,hand,gameOver,winning})}
+function saveHistory(){history.push(snapshot());if(history.length>100)history.shift()}
+function restore(){if(!history.length)return;snapshotParse(history.pop());selected=null;render();say('直前の手を戻しました。')}
+function snapshotParse(s){let o=JSON.parse(s);board=o.board;turn=o.turn;hand=o.hand;gameOver=o.gameOver;winning=o.winning||[]}
+function render(){
+ boardEl.innerHTML='';
+ for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+  const p=board?.[r]?.[c],b=document.createElement('button');b.type='button';b.className='cell';b.dataset.r=r;b.dataset.c=c;b.setAttribute('aria-label',`${r+1}行${c+1}列 ${p?(p.owner===1?'先手':'後手')+names[p.type]:'空き'}`);
+  if(p){b.classList.add('p'+p.owner);let sp=document.createElement('span');sp.className='piece';sp.textContent=glyph[p.type];b.append(sp)}
+  if(selected&&selected.r===r&&selected.c===c)b.classList.add('selected');
+  if(winning.includes(r*N+c))b.classList.add('winning');
+  b.addEventListener('click',()=>cellClick(r,c));boardEl.append(b);
+ }
+ $('turn').textContent=gameOver?'対局終了':(turn===1?'先手':'後手')+'の番'+(selected?'：移動先を選択':'');
+ $('counts').innerHTML=[1,2].map(pl=>`<div class="countbox"><strong>${pl===1?'先手':'後手'}${pl===turn?' ◀':''}</strong>${types.filter(t=>hand?.[pl]?.[t]>0).map(t=>`${names[t]} ${hand[pl][t]}`).join(' / ')||'手持ちなし'}<br><span class="muted">盤上 ${board.flat().filter(p=>p?.owner===pl).length}個</span></div>`).join('');
+ $('knights').disabled=$('abilities').value==='off';$('bonus').disabled=$('abilities').value==='off';$('branch').disabled=$('abilities').value==='off'||$('bonus').value==='off';
+}
+function cellClick(r,c){if(!started||gameOver)return;if($('mode').value==='online'&&online&&turn!==playerId){say('相手の番です。');return}
+ const p=board[r][c];
+ if(selected){
+  if(p&&p.owner===turn){selected={r,c};render();say(`${r+1}行${c+1}列の駒を選択。移動先を選んでください。`);return}
+  if(p){say('相手の駒があるマスには置けません。');return}
+  saveHistory();const from=selected;board[from.r][from.c]=null;selected=null;
+  const winAfterRemoval=checkWinner(turn);
+  if(winAfterRemoval){finish(winAfterRemoval);return}
+  board[r][c]=from.piece;render();const w=checkWinner(turn);if(w){finish(w);return}
+  turn=3-turn;render();say('駒を移動しました。'+(turn===1?'先手':'後手')+'の番です。');syncOnline();return;
+ }
+ if(p){if(p.owner!==turn){say('自分の駒だけ選択できます。');return}
+  if(Object.values(hand[turn]).some(v=>v>0)){say('手持ちの駒をすべて配置してから移動できます。');return}
+  selected={r,c,piece:p};render();say('移動先の空きマスを選んでください。');return;
+ }
+ if(!types.some(t=>hand[turn][t]>0)){say('配置できる駒がありません。自分の駒を選択して移動できます。');return}
+ // prompt for piece using a small chooser
+ choosePiece(turn,r,c);
+}
+function choosePiece(pl,r,c){const available=types.filter(t=>hand[pl][t]>0);const chooser=document.createElement('div');chooser.style.cssText='position:fixed;inset:0;background:#10182899;z-index:9;display:flex;align-items:center;justify-content:center;padding:20px';
+ const card=document.createElement('div');card.style.cssText='background:white;border-radius:16px;padding:18px;max-width:340px;width:100%;box-shadow:0 12px 40px #0004';card.innerHTML=`<h3 style="margin:0 0 12px">配置する駒を選択</h3><p class="muted">${r+1}行${c+1}列</p>`;
+ const row=document.createElement('div');row.className='row';
+ available.forEach(t=>{const b=document.createElement('button');b.innerHTML=`<span style="font-size:1.3em">${glyph[t]}</span><br>${names[t]}（${hand[pl][t]}）`;b.onclick=()=>{saveHistory();board[r][c]={owner:pl,type:t};hand[pl][t]--;chooser.remove();render();const w=checkWinner(pl);if(w){finish(w);return}turn=3-turn;render();say('配置しました。'+(turn===1?'先手':'後手')+'の番です。');syncOnline()};row.append(b)});
+ const cancel=document.createElement('button');cancel.textContent='キャンセル';cancel.style.marginTop='12px';cancel.onclick=()=>chooser.remove();card.append(row,cancel);chooser.append(card);document.body.append(chooser)}
+function canConnect(r,c,rr,cc){const a=board[r][c],b=board[rr][cc];if(!a||!b||a.owner!==b.owner||a.type===b.type)return false;
+ const dr=rr-r,dc=cc-c,ar=Math.abs(dr),ac=Math.abs(dc),dist=Math.max(ar,ac);
+ if(a.type==='P')return dist===1&&(ar+ac===1);
+ if(a.type==='K')return dist===1;
+ if(a.type==='N')return (ar===2&&ac===1)||(ar===1&&ac===2);
+ let valid=false,min=3;
+ if(a.type==='R')valid=(dr===0||dc===0)&&dist>=min;
+ if(a.type==='B')valid=ar===ac&&dist>=min;
+ if(a.type==='Q')valid=(dr===0||dc===0||ar===ac)&&dist>=min;
+ // Special queen-bishop horizontal connection is bidirectional.
+ if(((a.type==='Q'&&b.type==='B')||(a.type==='B'&&b.type==='Q'))&&dr===0&&dist>=3)valid=true;
+ if(!valid)return false;
+ if(a.type==='R'||a.type==='B'||a.type==='Q'||((a.type==='Q'||a.type==='B')&&dr===0)){
+  const sr=Math.sign(dr),sc=Math.sign(dc);for(let k=1;k<dist;k++)if(board[r+sr*k][c+sc*k])return false;
+ }
+ return valid}
+function graph(owner){const nodes=[];for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(board[r][c]?.owner===owner)nodes.push({r,c,id:r*N+c});const edges=new Map(nodes.map(n=>[n.id,[]]));for(const a of nodes)for(const b of nodes)if(a.id!==b.id&&canConnect(a.r,a.c,b.r,b.c))edges.get(a.id).push(b.id);return {nodes,edges}}
+function hasBonus(owner){if(!bonus||!abilities)return false;const g=graph(owner);for(const n of g.nodes){const p=board[n.r][n.c];if(!['R','B','Q'].includes(p.type))continue;let degree=0;for(const m of g.nodes)if(m.id!==n.id&&(canConnect(n.r,n.c,m.r,m.c)||canConnect(m.r,m.c,n.r,n.c)))degree++;if(branch&&degree!==1)continue;for(const m of g.nodes){if(m.id===n.id)continue;const d=Math.max(Math.abs(n.r-m.r),Math.abs(n.c-m.c));if(d>10&&(canConnect(n.r,n.c,m.r,m.c)||canConnect(m.r,m.c,n.r,n.c)))return true}}return false}
+function pathWin(owner,target){const g=graph(owner);if(g.nodes.length<target)return null;const adj=new Map(g.nodes.map(n=>[n.id,new Set()]));for(const n of g.nodes)for(const m of g.edges.get(n.id))adj.get(n.id).add(m);
+ // Directed simple paths; reverse edges are not assumed. Search every start.
+ let found=null;function dfs(id,path,seen){if(path.length>=target){found=path.slice();return true}for(const nxt of adj.get(id)||[]){if(seen.has(nxt))continue;seen.add(nxt);path.push(nxt);if(dfs(nxt,path,seen))return true;path.pop();seen.delete(nxt)}return false}
+ for(const n of g.nodes){if(dfs(n.id,[n.id],new Set([n.id])))return found}return null}
+function checkWinner(owner){if(!abilities){for(let r=0;r<N;r++)for(let c=0;c<N;c++){if(board[r][c]?.owner!==owner)continue;for(const [dr,dc] of [[1,0],[0,1],[1,1],[1,-1]]){let cells=[r*N+c];for(let k=1;k<5;k++){let rr=r+dr*k,cc=c+dc*k;if(rr<0||rr>=N||cc<0||cc>=N||board[rr][cc]?.owner!==owner)break;cells.push(rr*N+cc)}if(cells.length===5)return cells}}return null}
+ const target=hasBonus(3-owner)?9:7;return pathWin(owner,target)}
+function finish(path){gameOver=true;winning=path||[];render();say((turn===1?'先手':'後手')+'の勝利！');}
+function startGame(){abilities=$('abilities').value==='on';knights=abilities?$('knights').value==='on':true;bonus=abilities&&$('bonus').value==='on';branch=bonus&&$('branch').value==='on';if($('mode').value==='online'){say('オンライン対戦を使うには、READMEのFirebase設定を行ってください。現在はローカル対戦として開始します。');$('onlineStatus').textContent='Firebase未設定：ローカル対戦で開始';$('mode').value='local'}init()}
+$('start').onclick=startGame;$('newGame').onclick=()=>{if(confirm('現在の対局を終了して新しく始めますか？'))startGame()};$('undo').onclick=restore;$('cancelMove').onclick=()=>{selected=null;render();say('移動選択を解除しました。')};
+$('abilities').onchange=()=>{if($('abilities').value==='off'){$('knights').value='on';$('knights').disabled=true;$('bonus').disabled=true;$('branch').disabled=true}else{$('knights').disabled=false;$('bonus').disabled=false;$('branch').disabled=$('bonus').value==='off'}};
+$('bonus').onchange=()=>{$('branch').disabled=$('bonus').value==='off'||$('abilities').value==='off'};
+function syncOnline(){/* Firebase adapter is intentionally isolated; configure before enabling network play. */}
+init();started=false;board=emptyBoard();render();
+})();
+</script></body></html>
