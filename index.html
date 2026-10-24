@@ -28,6 +28,23 @@ header{background:#172033;color:white;padding:14px 16px;display:flex;justify-con
 @keyframes confetti-fall{0%{transform:translateY(-12vh) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(680deg);opacity:0}}
 .confetti{position:fixed;top:-20px;width:10px;height:17px;z-index:1001;pointer-events:none;animation:confetti-fall 2.7s linear forwards}
 @media(max-width:520px){.victory-card{border-width:4px;border-radius:20px}.victory-actions{flex-direction:column}.victory-actions button{width:100%}}
+
+.rules-panel{margin-top:2px;border:2px solid #b8c7dd;padding:18px;background:#fbfcff}
+.rules-panel summary{font-size:clamp(1.25rem,2.2vw,1.65rem);padding:5px 2px;color:#172033}
+.rules-content{font-size:clamp(1rem,1.35vw,1.12rem);line-height:1.7;color:#263247;margin-top:14px}
+.rules-intro{background:#eaf1ff;border-left:5px solid #2864dc;padding:12px 15px;border-radius:8px;font-weight:700;margin-bottom:14px}
+.rules-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rule-card{background:#fff;border:1px solid #d7dfeb;border-radius:12px;padding:15px;min-width:0}
+.rule-card h3{font-size:1.12em;margin:0 0 8px;color:#172d50;border-bottom:2px solid #e6ebf3;padding-bottom:6px}
+.rule-card ul{margin:6px 0 0;padding-left:1.3em}.rule-card li{margin:4px 0}
+.piece-rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.piece-rules div{display:flex;gap:8px;align-items:center;background:#f3f6fb;padding:8px;border-radius:8px;flex-wrap:wrap}
+.piece-rules b{font-size:1.06em;white-space:nowrap;color:#1e4f91}.piece-rules span{font-size:.94em}
+.rule-note{background:#fff6df;border-radius:8px;padding:9px 11px;margin:10px 0 0;font-size:.96em}
+.arrow-demo{font-size:1.5em;font-weight:900;color:#2864dc;padding:0 7px}
+.win-rule{border:2px solid #d5b75b;background:#fffdf5}.win-condition{display:grid;grid-template-columns:minmax(120px,.8fr) 1.5fr;gap:10px;padding:9px 0;border-bottom:1px solid #ece5d2}.win-condition:last-of-type{border-bottom:0}.win-condition>strong{color:#8b6210}
+@media(max-width:760px){.rules-panel{padding:12px}.rules-grid{grid-template-columns:1fr}.piece-rules{grid-template-columns:1fr 1fr}.win-condition{grid-template-columns:1fr;gap:2px}}
+
 </style></head>
 <body>
 <div id="victoryOverlay" class="hidden" role="dialog" aria-modal="true" aria-labelledby="victoryTitle">
@@ -64,10 +81,16 @@ header{background:#172033;color:white;padding:14px 16px;display:flex;justify-con
 <p class="muted" id="help">駒を置く：空きマスをタップ。移動：自分の駒を選び、空きマスをタップします。</p>
 <div class="muted" id="onlineStatus">オンライン未接続</div>
 </section>
-<section class="panel wide">
-<details><summary>接続ルール</summary><div class="muted" style="margin-top:8px">
-歩：隣接する上下左右。<br>ルーク：縦横3マス以上。<br>ビショップ：斜め3マス以上。<br>クイーン：縦横斜め3マス以上。<br>キング：周囲1マス。ナイト：チェスのL字。<br>ルーク・ビショップ・クイーンの線上は途中の駒で遮られます。同種駒同士は直接接続しません。クイーンとビショップは同じ横列で3マス以上離れていて、間に駒がなければ接続します。<br>能力ありは自分の駒7個以上を重複なしの1本の経路でつなぐと勝利。相手に長距離ボーナスがある場合は9個必要。能力なしは縦横斜めに5個連続で勝利。
-</div></details>
+<section class="panel wide rules-panel">
+<details open><summary>📘 ゲームルール（ここで確認）</summary><div class="rules-content">
+<div class="rules-intro">自分の駒を置き、ルールに沿ってつながる駒の経路を作ろう。設定したモードによって勝利条件が変わります。</div>
+<div class="rules-grid">
+<div class="rule-card"><h3>① 基本の進め方</h3><ul><li>最初に人数・能力などを選び、「設定で対局開始」を押します。</li><li>置きたい駒を先に選び、盤面の空いているマスをタップします。</li><li>自分の番には、駒を1個置くか、ルール上可能な場合に自分の駒を1個移動します。</li><li>青→赤→黒→白の順に手番が進み、選んだ人数のプレイヤーで交代します。</li></ul></div>
+<div class="rule-card"><h3>② 駒のつながり方（能力あり）</h3><div class="piece-rules"><div><b>歩 ♟</b><span>上下左右の隣1マス</span></div><div><b>ルーク ♜</b><span>縦・横に3マス以上</span></div><div><b>ビショップ ♝</b><span>斜めに3マス以上</span></div><div><b>クイーン ♛</b><span>縦・横・斜めに3マス以上</span></div><div><b>キング ♚</b><span>周囲の隣1マス</span></div><div><b>ナイト ♞</b><span>チェスの「L字」型</span></div></div><p class="rule-note">図のイメージ：駒 A <span class="arrow-demo">→</span> 駒 B は、AからBへ接続できることを表します。矢印の向きは駒の種類や接続条件によって変わる場合があります。</p></div>
+<div class="rule-card"><h3>③ 接続時の注意</h3><ul><li>同じ種類の駒同士は直接つながりません。</li><li>ルーク・ビショップ・クイーンの直線上に別の駒があると、その先へは接続できません。</li><li>クイーンとビショップは、同じ横列で3マス以上離れ、間に駒がなければ特別に接続できます。</li><li>接続候補・接続矢印は、画面上のチェックで表示／非表示を切り替えられます。</li></ul></div>
+<div class="rule-card win-rule"><h3>④ 勝利条件</h3><div class="win-condition"><strong>能力あり</strong><span>自分の駒を重複なしの1本の経路で<strong>7個以上</strong>つなぐと勝利。</span></div><div class="win-condition"><strong>長距離ボーナスありの相手がいる場合</strong><span>勝利に必要な経路は<strong>9個以上</strong>になります。</span></div><div class="win-condition"><strong>能力なし</strong><span>自分の駒を縦・横・斜めのいずれかに<strong>5個連続</strong>で並べると勝利。</span></div><p class="rule-note">経路の例：♟ → ♜ → ♞ → ♝ → ♚ → ♟ → ♛（異なる駒をたどり、同じ駒を二度数えない）</p></div>
+<div class="rule-card"><h3>⑤ 設定と表示</h3><ul><li>プレイヤー人数は2〜4人です。色は青・赤・黒・白です。</li><li>ナイトを使わない設定では、各プレイヤーの駒数は14個になります。</li><li>「接続経路の状況」をオンにすると、プレイヤーごとの接続経路と駒数を確認できます。</li><li>勝利すると画面中央に勝利表示が出ます。「盤面を確認」で盤面に戻れます。</li></ul></div>
+</div></div></details>
 </section>
 </aside></main><div class="footer">試作版。2〜4人の同じ端末での対戦に対応。オンライン対戦にはFirebase Realtime Databaseの設定が必要です。対局ルールはブラウザ上で処理されます。</div>
 <script>
