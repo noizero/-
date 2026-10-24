@@ -7,7 +7,7 @@
 :root{--bg:#f3f5f9;--ink:#172033;--line:#b8c3d4;--blue:#2864dc;--red:#c33e4d;--black:#222831;--white:#ffffff}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 header{background:#172033;color:white;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px}h1{font-size:1.2rem;margin:0}main{max-width:1600px;margin:auto;padding:16px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
-.panel{background:white;border:1px solid #dce2ec;border-radius:14px;padding:12px;box-shadow:0 3px 12px #1720330a}.boardwrap{width:100%;overflow:auto;touch-action:pan-x pan-y}.board{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));grid-template-rows:repeat(15,minmax(0,1fr));position:relative;width:min(100%,1100px);aspect-ratio:1;height:auto;margin:auto;border:1px solid #7f8ba0;background:#e9d6a4;touch-action:manipulation;overflow:hidden}.cell{border:1px solid #b5a67e;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;padding:0;font-size:clamp(10px,2.8vw,24px);font-weight:700;line-height:1;background:transparent;color:#182033;cursor:pointer;position:relative}.cell:focus-visible{outline:3px solid #2864dc;z-index:2}.cell.selected{background:#b9d5ff!important;box-shadow:inset 0 0 0 3px var(--blue)}.cell.hint{background:#d8edce!important;box-shadow:inset 0 0 0 2px #398047}.cell.target-hint{background:#b9e5bd!important;box-shadow:inset 0 0 0 3px #25813a}.cell.winning{background:#ffe58b}.piece{width:82%;height:82%;max-width:42px;max-height:42px;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 2px #fff8,0 1px 3px #0003}.p1 .piece{background:#dceaff;border:2px solid #2864dc;color:#16449d}.p2 .piece{background:#ffe0e3;border:2px solid #c33e4d;color:#8d1d2a}.p3 .piece{background:#343a40;border:2px solid #111;color:#fff}.p4 .piece{background:#fff;border:2px solid #555;color:#172033}.connection-overlay{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible}.connection-overlay line{vector-effect:non-scaling-stroke}.cell.p1,.cell.p2,.cell.p3,.cell.p4{background:#e9d6a4}.side{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;align-items:start}label{display:block;font-size:.9rem;margin:8px 0 4px}select,input,button{font:inherit;border-radius:9px;border:1px solid #c5cedc;padding:9px;background:white;color:var(--ink);max-width:100%}button{cursor:pointer;font-weight:650}
+.panel{background:white;border:1px solid #dce2ec;border-radius:14px;padding:12px;box-shadow:0 3px 12px #1720330a}.boardwrap{width:100%;overflow:auto;touch-action:pan-x pan-y}.board{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));grid-template-rows:repeat(15,minmax(0,1fr));position:relative;width:min(100%,1100px);aspect-ratio:1;height:auto;margin:auto;border:1px solid #7f8ba0;background:#e9d6a4;touch-action:manipulation;overflow:hidden}.cell{border:1px solid #b5a67e;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;padding:0;font-size:clamp(10px,2.8vw,24px);font-weight:700;line-height:1;background:transparent;color:#182033;cursor:pointer;position:relative}.cell:focus-visible{outline:3px solid #2864dc;z-index:2}.cell.selected{background:#b9d5ff!important;box-shadow:inset 0 0 0 3px var(--blue)}.cell.hint{background:#d8edce!important;box-shadow:inset 0 0 0 2px #398047}.cell.target-hint{background:color-mix(in srgb,var(--hint-color,#25813a) 28%, #e9d6a4)!important;box-shadow:inset 0 0 0 3px var(--hint-color,#25813a)}.cell.preview-hint{background:color-mix(in srgb,var(--hint-color,#25813a) 20%, #e9d6a4)!important;box-shadow:inset 0 0 0 2px var(--hint-color,#25813a)}.cell.winning{background:#ffe58b}.piece{width:82%;height:82%;max-width:42px;max-height:42px;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 2px #fff8,0 1px 3px #0003}.p1 .piece{background:#dceaff;border:2px solid #2864dc;color:#16449d}.p2 .piece{background:#ffe0e3;border:2px solid #c33e4d;color:#8d1d2a}.p3 .piece{background:#343a40;border:2px solid #111;color:#fff}.p4 .piece{background:#fff;border:2px solid #555;color:#172033}.connection-overlay{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible}.connection-overlay line{vector-effect:non-scaling-stroke}.cell.p1,.cell.p2,.cell.p3,.cell.p4{background:#e9d6a4}.side{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;align-items:start}label{display:block;font-size:.9rem;margin:8px 0 4px}select,input,button{font:inherit;border-radius:9px;border:1px solid #c5cedc;padding:9px;background:white;color:var(--ink);max-width:100%}button{cursor:pointer;font-weight:650}
 #playerCount option:nth-child(1),#abilities option,#knights option,#bonus option,#branch option{font-weight:700}
 .color-legend{font-weight:800}button.primary{background:var(--blue);border-color:var(--blue);color:white}button.danger{color:#a72b3b}button:disabled{opacity:.45;cursor:not-allowed}.row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.row>*{flex:1}.status{font-weight:750;font-size:1.05rem}.muted{color:#667085;font-size:.84rem;line-height:1.5}.counts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.countbox{padding:8px;background:#f4f6fa;border-radius:10px}.countbox strong{display:block}.pill{display:inline-block;background:#eef2f8;padding:3px 8px;border-radius:999px;font-size:.8rem}.hidden{display:none!important}#message{min-height:2.5em;line-height:1.4}
 #message.victory{display:block;min-height:0;margin:18px 0;padding:24px 16px;border:4px solid currentColor;border-radius:18px;background:#fff;text-align:center;font-size:clamp(1.8rem,5vw,3.6rem);font-weight:900;line-height:1.25;letter-spacing:.03em;box-shadow:0 8px 26px #17203325;animation:victory-pop .35s ease-out}
@@ -56,7 +56,7 @@ header{background:#172033;color:white;padding:14px 16px;display:flex;justify-con
 <div class="row" style="margin-bottom:9px"><div id="turn" class="status">設定を選んで開始してください</div><button id="newGame" class="primary">新しい対局</button></div>
 <div class="section-title">配置する駒を選択</div>
 <div id="piecePicker" class="row" style="margin-bottom:10px"></div>
-<div class="row" style="margin-bottom:8px;align-items:center"><label style="margin:0;display:flex;gap:7px;align-items:center"><input id="showConnections" type="checkbox" checked style="width:auto">接続候補を表示</label><label style="margin:0;display:flex;gap:7px;align-items:center"><input id="showArrows" type="checkbox" checked style="width:auto">駒間の接続矢印</label><label style="margin:0;display:flex;gap:7px;align-items:center"><input id="showPaths" type="checkbox" style="width:auto">接続経路の状況</label><span class="muted" id="selectionStatus">配置する駒を選んでください</span></div>
+<div class="row" style="margin-bottom:8px;align-items:center"><button id="relocateToggle" type="button">再配置：OFF</button><label style="margin:0;display:flex;gap:7px;align-items:center"><input id="showConnections" type="checkbox" checked style="width:auto">選択駒の接続先・配置候補を表示</label><label style="margin:0;display:flex;gap:7px;align-items:center"><input id="showArrows" type="checkbox" checked style="width:auto">駒間の接続矢印</label><label style="margin:0;display:flex;gap:7px;align-items:center"><input id="showPaths" type="checkbox" style="width:auto">接続経路の状況</label><span class="muted" id="selectionStatus">配置する駒を選んでください</span></div>
 <div class="boardwrap"><div id="board" class="board" aria-label="15×15盤面"></div></div>
 <section id="pathStatus" class="panel hidden" style="margin:10px 0"><div class="section-title">プレイヤー別・接続経路の状況</div><div id="pathDetails" class="muted"></div></section><p id="message" role="status" aria-live="polite" class="muted">設定後、空いているマスをタップして駒を置きます。</p>
 <div class="row"><button id="cancelMove">移動選択を解除</button><button id="undo" class="danger">1手戻す</button></div>
@@ -78,7 +78,7 @@ header{background:#172033;color:white;padding:14px 16px;display:flex;justify-con
 </section>
 <section class="panel">
 <div class="section-title">操作</div>
-<p class="muted" id="help">駒を置く：空きマスをタップ。移動：自分の駒を選び、空きマスをタップします。</p>
+<p class="muted" id="help">配置：駒を選んで空きマスをタップ。接続確認：再配置がOFFのとき自分の駒をタップすると、そのプレイヤー色で接続先を表示します。再配置：ボタンをONにしてから自分の駒を選び、移動先の空きマスをタップします。手番が変わると自動でOFFに戻ります。</p>
 <div class="muted" id="onlineStatus">オンライン未接続</div>
 </section>
 <section class="panel wide rules-panel">
@@ -89,20 +89,20 @@ header{background:#172033;color:white;padding:14px 16px;display:flex;justify-con
 <div class="rule-card"><h3>② 駒のつながり方（能力あり）</h3><div class="piece-rules"><div><b>歩 ♟</b><span>上下左右の隣1マス</span></div><div><b>ルーク ♜</b><span>縦・横に3マス以上</span></div><div><b>ビショップ ♝</b><span>斜めに3マス以上</span></div><div><b>クイーン ♛</b><span>縦・横・斜めに3マス以上</span></div><div><b>キング ♚</b><span>周囲の隣1マス</span></div><div><b>ナイト ♞</b><span>チェスの「L字」型</span></div></div><p class="rule-note">図のイメージ：駒 A <span class="arrow-demo">→</span> 駒 B は、AからBへ接続できることを表します。矢印の向きは駒の種類や接続条件によって変わる場合があります。</p></div>
 <div class="rule-card"><h3>③ 接続時の注意</h3><ul><li>同じ種類の駒同士は直接つながりません。</li><li>ルーク・ビショップ・クイーンの直線上に別の駒があると、その先へは接続できません。</li><li>クイーンとビショップは、同じ横列で3マス以上離れ、間に駒がなければ特別に接続できます。</li><li>接続候補・接続矢印は、画面上のチェックで表示／非表示を切り替えられます。</li></ul></div>
 <div class="rule-card win-rule"><h3>④ 勝利条件</h3><div class="win-condition"><strong>能力あり</strong><span>自分の駒を重複なしの1本の経路で<strong>7個以上</strong>つなぐと勝利。</span></div><div class="win-condition"><strong>長距離ボーナスありの相手がいる場合</strong><span>勝利に必要な経路は<strong>9個以上</strong>になります。</span></div><div class="win-condition"><strong>能力なし</strong><span>自分の駒を縦・横・斜めのいずれかに<strong>5個連続</strong>で並べると勝利。</span></div><p class="rule-note">経路の例：♟ → ♜ → ♞ → ♝ → ♚ → ♟ → ♛（異なる駒をたどり、同じ駒を二度数えない）</p></div>
-<div class="rule-card"><h3>⑤ 設定と表示</h3><ul><li>プレイヤー人数は2〜4人です。色は青・赤・黒・白です。</li><li>ナイトを使わない設定では、各プレイヤーの駒数は14個になります。</li><li>「接続経路の状況」をオンにすると、プレイヤーごとの接続経路と駒数を確認できます。</li><li>勝利すると画面中央に勝利表示が出ます。「盤面を確認」で盤面に戻れます。</li></ul></div>
+<div class="rule-card"><h3>⑤ 設定と表示</h3><ul><li>プレイヤー人数は2〜4人です。色は青・赤・黒・白です。</li><li>ナイトを使わない設定では、各プレイヤーの駒数は14個になります。</li><li>再配置がOFFのとき自分の駒をタップすると、その駒のプレイヤー色で接続先を表示します。接続先表示は「選択駒の接続先・配置候補を表示」でオン／オフできます。</li><li>再配置するときは「再配置：OFF」ボタンを押してONにし、自分の駒を選んでから移動先の空きマスをタップします。手番が変わると自動でOFFに戻ります。</li><li>「接続経路の状況」をオンにすると、プレイヤーごとの接続経路と駒数を確認できます。</li><li>勝利すると画面中央に勝利表示が出ます。「盤面を確認」で盤面に戻れます。</li></ul></div>
 </div></div></details>
 </section>
 </aside></main><div class="footer">試作版。2〜4人の同じ端末での対戦に対応。オンライン対戦にはFirebase Realtime Databaseの設定が必要です。対局ルールはブラウザ上で処理されます。</div>
 <script>
 (()=>{'use strict';
 const N=15, types=['P','R','B','N','Q','K'], names={P:'歩',R:'ル',B:'ビ',N:'ナ',Q:'ク',K:'キ'}, glyph={P:'♟',R:'♜',B:'♝',N:'♞',Q:'♛',K:'♚'};
-let board,turn,started=false,abilities=true,knights=true,bonus=true,branch=true,selected=null,hand,history=[],gameOver=false,winning=[],online=null,roomRef=null,playerId=1,roomCode='',chosenType=null,playerCount=2;
+let board,turn,started=false,abilities=true,knights=true,bonus=true,branch=true,selected=null,inspect=null,relocateMode=false,hand,history=[],gameOver=false,winning=[],online=null,roomRef=null,playerId=1,roomCode='',chosenType=null,playerCount=2;
 const playerNames={1:'青プレイヤー',2:'赤プレイヤー',3:'黒プレイヤー',4:'白プレイヤー'};
 const playerColors={1:'#2864dc',2:'#c33e4d',3:'#222831',4:'#777777'};
 const $=id=>document.getElementById(id), boardEl=$('board');
 function emptyBoard(){return Array.from({length:N},()=>Array(N).fill(null))}
 function inventory(){return {P:8,R:2,B:2,N:knights?2:0,Q:1,K:1}}
-function init(){$('victoryOverlay')?.classList.add('hidden');document.querySelectorAll('.confetti').forEach(x=>x.remove());board=emptyBoard();turn=1;selected=null;chosenType=null;gameOver=false;winning=[];history=[];hand={};for(let pl=1;pl<=playerCount;pl++)hand[pl]=inventory();started=true;render();say(`${playerNames[1]}：先に配置する駒を選び、その後に盤面のマスを選んでください。`);$('turn').textContent=playerNames[1]+'の番';}
+function init(){$('victoryOverlay')?.classList.add('hidden');document.querySelectorAll('.confetti').forEach(x=>x.remove());board=emptyBoard();turn=1;selected=null;inspect=null;relocateMode=false;chosenType=null;gameOver=false;winning=[];history=[];hand={};for(let pl=1;pl<=playerCount;pl++)hand[pl]=inventory();started=true;render();say(`${playerNames[1]}：先に配置する駒を選び、その後に盤面のマスを選んでください。`);$('turn').textContent=playerNames[1]+'の番';}
 function say(s){const el=$('message');el.textContent=s;el.classList.remove('victory','red','black','white');}
 function snapshot(){return JSON.stringify({board,turn,hand,gameOver,winning})}
 function saveHistory(){history.push(snapshot());if(history.length>100)history.shift()}
@@ -110,14 +110,16 @@ function restore(){if(!history.length)return;snapshotParse(history.pop());select
 function snapshotParse(s){let o=JSON.parse(s);board=o.board;turn=o.turn;hand=o.hand;gameOver=o.gameOver;winning=o.winning||[]}
 function renderPicker(){
  const el=$('piecePicker');el.innerHTML='';
- const canPlace=started&&!gameOver&&Object.values(hand?.[turn]||{}).some(v=>v>0)&&!selected;
+ const canPlace=started&&!gameOver&&!relocateMode&&Object.values(hand?.[turn]||{}).some(v=>v>0)&&!selected;
  for(const t of types){const b=document.createElement('button');b.type='button';b.className=(chosenType===t?'primary':'');b.disabled=!canPlace||!(hand?.[turn]?.[t]>0);b.innerHTML=`<span style="font-size:1.2em">${glyph[t]}</span> ${names[t]} <small>×${hand?.[turn]?.[t]??0}</small>`;b.setAttribute('aria-pressed',chosenType===t?'true':'false');b.onclick=()=>{chosenType=t;render();say(`${names[t]}を選択しました。配置する空きマスを選んでください。`)};el.append(b)}
- $('selectionStatus').textContent=selected?'移動先を選択中':chosenType?`${names[chosenType]}を選択中`:'配置する駒を選んでください';
+ $('selectionStatus').textContent=selected?'移動先を選択中':inspect?`${playerNames[board[inspect.r][inspect.c]?.owner]}の接続先を確認中`:chosenType?`${names[chosenType]}を選択中`:'配置する駒を選んでください';
+ const toggle=$('relocateToggle');toggle.textContent=`再配置：${relocateMode?'ON':'OFF'}`;toggle.classList.toggle('primary',relocateMode);toggle.disabled=!started||gameOver||Object.values(hand?.[turn]||{}).some(v=>v>0);toggle.title=toggle.disabled?'手持ちの駒をすべて配置すると再配置できます':'';
 }
 function hintIds(){
  if(!$('showConnections')?.checked||!started||!abilities)return new Set();
  const ids=new Set();
- if(selected){for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(board[r][c]?.owner===turn&&canConnect(selected.r,selected.c,r,c))ids.add(r*N+c);return ids}
+ const focus=selected||inspect;
+ if(focus){const owner=board[focus.r][focus.c]?.owner;if(!owner)return ids;for(let r=0;r<N;r++)for(let c=0;c<N;c++)if((r!==focus.r||c!==focus.c)&&board[r][c]?.owner===owner&&(canConnect(focus.r,focus.c,r,c)||canConnect(r,c,focus.r,focus.c)))ids.add(r*N+c);return ids}
  if(chosenType){for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(board[r][c]?.owner===turn){const old=board[r][c];board[r][c]={owner:turn,type:chosenType};const connects=canConnect(r,c,r,c);board[r][c]=old;}
  // Preview links from a temporary selected piece at each empty square is ambiguous; show existing pieces that can connect to/from at least one legal placement.
  for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!board[r][c]){board[r][c]={owner:turn,type:chosenType};let any=false;for(let rr=0;rr<N&&!any;rr++)for(let cc=0;cc<N;cc++)if(board[rr][cc]?.owner===turn&&!(rr===r&&cc===c)&&(canConnect(r,c,rr,cc)||canConnect(rr,cc,r,c))){any=true;break}board[r][c]=null;if(any)ids.add(r*N+c)}
@@ -152,12 +154,12 @@ function render(){
   const p=board?.[r]?.[c],b=document.createElement('button');b.type='button';b.className='cell';b.dataset.r=r;b.dataset.c=c;b.setAttribute('aria-label',`${r+1}行${c+1}列 ${p?playerNames[p.owner]+names[p.type]:'空き'}`);
   if(p){b.classList.add('p'+p.owner);let sp=document.createElement('span');sp.className='piece';sp.textContent=glyph[p.type];b.append(sp)}
   if(selected&&selected.r===r&&selected.c===c)b.classList.add('selected');
-  if(hints.has(r*N+c))b.classList.add('hint');
+  if(hints.has(r*N+c)){if(selected||inspect){b.classList.add(selected?'target-hint':'preview-hint');const focus=selected||inspect;const owner=board[focus.r][focus.c]?.owner;b.style.setProperty('--hint-color',playerColors[owner]||'#25813a')}else b.classList.add('hint')}
   if(winning.includes(r*N+c))b.classList.add('winning');
   b.addEventListener('click',()=>cellClick(r,c));boardEl.append(b);
  }
  renderConnectionArrows();
- $('turn').textContent=gameOver?'対局終了':playerNames[turn]+'の番'+(selected?'：移動先を選択':'');$('turn').style.color=gameOver?'':playerColors[turn];
+ $('turn').textContent=gameOver?'対局終了':playerNames[turn]+'の番'+(selected?'：再配置先を選択':relocateMode?'：再配置ON':'');$('turn').style.color=gameOver?'':playerColors[turn];
  $('counts').innerHTML=Array.from({length:playerCount},(_,i)=>i+1).map(pl=>`<div class="countbox" style="border-left:4px solid ${playerColors[pl]}"><strong style="color:${playerColors[pl]}">${playerNames[pl]}${pl===turn?' ◀':''}</strong>${types.filter(t=>hand?.[pl]?.[t]>0).map(t=>`${names[t]} ${hand[pl][t]}`).join(' / ')||'手持ちなし'}<br><span class="muted">盤上 ${board.flat().filter(p=>p?.owner===pl).length}個</span></div>`).join('');
  $('knights').disabled=$('abilities').value==='off';$('bonus').disabled=$('abilities').value==='off';$('branch').disabled=$('abilities').value==='off'||$('bonus').value==='off';renderPicker();
 
@@ -166,22 +168,24 @@ function render(){
 function cellClick(r,c){if(!started||gameOver)return;if($('mode').value==='online'&&online&&turn!==playerId){say('相手の番です。');return}
  const p=board[r][c];
  if(selected){
-  if(p&&p.owner===turn){selected={r,c};render();say(`${r+1}行${c+1}列の駒を選択。移動先を選んでください。`);return}
-  if(p){say('相手の駒があるマスには置けません。');return}
-  saveHistory();const from=selected;board[from.r][from.c]=null;selected=null;
+  if(p&&p.owner===turn){selected={r,c,piece:p};inspect=null;render();say('再配置する駒を選択しました。移動先の空きマスを選んでください。');return}
+  if(p){say('相手の駒があるマスには移動できません。');return}
+  saveHistory();const from=selected;board[from.r][from.c]=null;selected=null;inspect=null;relocateMode=false;
   const winAfterRemoval=checkWinner(turn);
   if(winAfterRemoval){finish(winAfterRemoval,turn);return}
   board[r][c]=from.piece;render();const w=checkWinner(turn);if(w){finish(w,turn);return}
-  turn=turn%playerCount+1;render();say('駒を移動しました。'+playerNames[turn]+'の番です。');syncOnline();return;
+  turn=turn%playerCount+1;selected=null;inspect=null;relocateMode=false;chosenType=null;render();say('駒を再配置しました。'+playerNames[turn]+'の番です。再配置はOFFに戻りました。');syncOnline();return;
  }
  if(p){if(p.owner!==turn){say('自分の駒だけ選択できます。');return}
-  if(Object.values(hand[turn]).some(v=>v>0)){say('手持ちの駒をすべて配置してから移動できます。');return}
-  selected={r,c,piece:p};render();say('移動先の空きマスを選んでください。');return;
+  if(relocateMode){if(Object.values(hand[turn]).some(v=>v>0)){say('再配置は手持ちの駒をすべて配置した後に行えます。');return}inspect=null;chosenType=null;selected={r,c,piece:p};render();say('再配置する駒を選択しました。移動先の空きマスを選んでください。');return}
+  inspect={r,c};chosenType=null;render();say(`${playerNames[p.owner]}の駒を選択しました。表示された同じ色のマスが接続可能先です。`);return;
  }
- if(!types.some(t=>hand[turn][t]>0)){say('配置できる駒がありません。自分の駒を選択して移動できます。');return}
- if(!chosenType){say('先に盤面上部の駒選択ボタンから、配置する駒を選んでください。');return}
+ inspect=null;
+ if(relocateMode){say('再配置がONです。移動する自分の駒を先に選択してください。');return}
+ if(!types.some(t=>hand[turn][t]>0)){say('配置できる駒がありません。再配置ボタンをONにして自分の駒を選択してください。');return}
+ if(!chosenType){say('先に盤面上部の駒選択ボタンから、配置する駒を選んでください。');render();return}
  if(hand[turn][chosenType]<=0){chosenType=null;render();say('その駒は残っていません。別の駒を選んでください。');return}
- saveHistory();board[r][c]={owner:turn,type:chosenType};hand[turn][chosenType]--;chosenType=null;render();const w=checkWinner(turn);if(w){finish(w,turn);return}turn=turn%playerCount+1;render();say('配置しました。'+playerNames[turn]+'の番です。次の駒を選択してください。');syncOnline();return;
+ saveHistory();board[r][c]={owner:turn,type:chosenType};hand[turn][chosenType]--;chosenType=null;inspect=null;render();const w=checkWinner(turn);if(w){finish(w,turn);return}turn=turn%playerCount+1;selected=null;inspect=null;relocateMode=false;render();say('配置しました。'+playerNames[turn]+'の番です。再配置はOFFです。次の駒を選択してください。');syncOnline();return;
 }
 function canConnect(r,c,rr,cc){const a=board[r][c],b=board[rr][cc];if(!a||!b||a.owner!==b.owner||a.type===b.type)return false;
  const dr=rr-r,dc=cc-c,ar=Math.abs(dr),ac=Math.abs(dc),dist=Math.max(ar,ac);
@@ -247,7 +251,8 @@ function spawnConfetti(){document.querySelectorAll('.confetti').forEach(x=>x.rem
 function closeVictory(){ $('victoryOverlay').classList.add('hidden');document.querySelectorAll('.confetti').forEach(x=>x.remove());}
 $('victoryClose').onclick=closeVictory;$('victoryAgain').onclick=()=>{closeVictory();startGame();};
 function startGame(){playerCount=Number($('playerCount').value)||2;abilities=$('abilities').value==='on';knights=abilities?$('knights').value==='on':true;bonus=abilities&&$('bonus').value==='on';branch=bonus&&$('branch').value==='on';if($('mode').value==='online'){say('オンライン対戦を使うには、READMEのFirebase設定を行ってください。現在はローカル対戦として開始します。');$('onlineStatus').textContent='Firebase未設定：ローカル対戦で開始';$('mode').value='local'}init()}
-$('start').onclick=startGame;$('newGame').onclick=()=>{if(confirm('現在の対局を終了して新しく始めますか？'))startGame()};$('undo').onclick=restore;$('cancelMove').onclick=()=>{selected=null;chosenType=null;render();say('駒の選択を解除しました。')};$('showConnections').onchange=()=>render();$('showArrows').onchange=()=>render();$('showPaths').onchange=()=>renderPathStatus();
+$('start').onclick=startGame;$('newGame').onclick=()=>{if(confirm('現在の対局を終了して新しく始めますか？'))startGame()};$('undo').onclick=restore;$('cancelMove').onclick=()=>{selected=null;inspect=null;chosenType=null;render();say('駒の選択を解除しました。')};
+$('relocateToggle').onclick=()=>{if(!started||gameOver)return;if(Object.values(hand?.[turn]||{}).some(v=>v>0)){say('手持ちの駒をすべて配置してから再配置できます。');return}relocateMode=!relocateMode;selected=null;inspect=null;chosenType=null;render();say(relocateMode?'再配置がONです。移動する自分の駒を選択してください。':'再配置をOFFにしました。自分の駒を選ぶと接続先を確認できます。')};$('showConnections').onchange=()=>render();$('showArrows').onchange=()=>render();$('showPaths').onchange=()=>renderPathStatus();
 $('abilities').onchange=()=>{if($('abilities').value==='off'){$('knights').value='on';$('knights').disabled=true;$('bonus').disabled=true;$('branch').disabled=true}else{$('knights').disabled=false;$('bonus').disabled=false;$('branch').disabled=$('bonus').value==='off'}};
 $('bonus').onchange=()=>{$('branch').disabled=$('bonus').value==='off'||$('abilities').value==='off'};
 function syncOnline(){/* Firebase adapter is intentionally isolated; configure before enabling network play. */}
